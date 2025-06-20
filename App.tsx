@@ -139,7 +139,7 @@ const Button: React.FC<ButtonProps> = ({ onClick, type = "button", disabled = fa
 const ThinkingCatLoader: React.FC = () => (
   <div className="flex flex-col items-center justify-center my-4" aria-live="polite" aria-label="考え中">
     <img
-      src="/cotola-chan-thinking.png"
+      src="/cat_thinking.png"
       alt="考え中のコトラちゃん"
       className="w-32 h-auto mb-3"
       onError={(e) => {

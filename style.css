@@ -281,6 +281,84 @@ header {
     background-color: #d48cb0;
 }
 
+/* チャットエリアのスタイル */
+.chat-area {
+    margin-top: 40px; /* 他の要素との間隔 */
+    text-align: left;
+    border: 1px solid #f0e4e8;
+    border-radius: 15px;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.chat-area h3 {
+    color: #e8a0bf;
+    font-size: 1.2rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.chat-messages {
+    max-height: 250px; /* チャット履歴の最大高さ */
+    overflow-y: auto; /* スクロール可能に */
+    border: 1px solid #f0e4e8;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: #fdf6f8;
+}
+
+.chat-message {
+    padding: 8px 12px;
+    border-radius: 15px;
+    margin-bottom: 8px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.chat-message.user {
+    background-color: #e8a0bf; /* ユーザーメッセージの背景色 */
+    color: white;
+    margin-left: auto; /* 右寄せ */
+    border-bottom-right-radius: 2px;
+}
+
+.chat-message.ai {
+    background-color: #f0e4e8; /* AIメッセージの背景色 */
+    color: #555;
+    margin-right: auto; /* 左寄せ */
+    border-bottom-left-radius: 2px;
+}
+
+.chat-input-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#chat-input {
+    flex-grow: 1; /* 残りのスペースを埋める */
+    padding: 10px;
+    border: 1px solid #f0e4e8;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    font-family: 'Noto Sans JP', sans-serif;
+    box-sizing: border-box;
+}
+
+#chat-input:focus {
+    outline: none;
+    border-color: #e8a0bf;
+}
+
+#send-chat-btn {
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    white-space: nowrap; /* ボタン内のテキストを改行させない */
+}
+
 /* フッター */
 footer {
     margin-top: 30px;
@@ -317,5 +395,22 @@ footer {
 
     .radio-option label {
         font-size: 0.9rem;
+    }
+
+    .chat-area {
+        padding: 15px;
+    }
+
+    .chat-area h3 {
+        font-size: 1rem;
+    }
+
+    #chat-input {
+        width: calc(100% - 70px);
+    }
+
+    #send-chat-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
     }
 }

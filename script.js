@@ -10,6 +10,11 @@ const thinkingCat = document.getElementById('thinking-cat'); // 考え中の猫�
 const historyList = document.getElementById('history-list'); // 履歴リストの要素を取得
 const clearHistoryBtn = document.getElementById('clear-history-btn'); // 履歴クリアボタンの要素を取得
 
+// チャット関連の要素を取得
+const chatMessages = document.getElementById('chat-messages');
+const chatInput = document.getElementById('chat-input');
+const sendChatBtn = document.getElementById('send-chat-btn');
+
 // アコーディオンの要素を取得
 const accordionHeaders = document.querySelectorAll('.accordion-header');
 
@@ -98,6 +103,15 @@ clearHistoryBtn.addEventListener('click', () => {
     }
 });
 
+// チャットメッセージを表示する関数
+function displayChatMessage(sender, message) {
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('chat-message', sender);
+    messageElement.innerHTML = `<b>${sender === 'user' ? 'あなた' : 'AI'}:</b> ${message}`;
+    chatMessages.appendChild(messageElement);
+    chatMessages.scrollTop = chatMessages.scrollHeight; // 最新のメッセージが見えるようにスクロール
+}
+
 // 「文章を生成する」ボタンが押されたときに実行する処理
 generationForm.addEventListener('submit', async (event) => { // asyncを追加
     // フォームのデフォルトの送信動作（ページのリロード）を防ぎます。
@@ -134,7 +148,7 @@ generationForm.addEventListener('submit', async (event) => { // asyncを追加
     thinkingCat.classList.remove('hidden');
 
     try {
-        const response = await fetch('/api/generate', { // Serverless Functionを呼び出す
+        const response = await fetch('/api/generate', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -217,8 +231,6 @@ snsCopyBtn.addEventListener('click', () => {
     });
 });
 
-// ページ読み込み時に履歴をロード
-loadHistory();
-
 // 初期表示時の文字数を更新
+loadHistory();
 updateCharCount();

@@ -23,9 +23,9 @@ export default async function handler(req, res) {
         console.log('Attempting to send message to Gemini API...'); // Gemini API呼び出し前ログ
         const chat = model.startChat({
             history: [
-                { role: "user", parts: "以下の文章を修正してください。" },
-                { role: "model", parts: "はい、どのような修正をご希望ですか？" },
-                { role: "user", parts: currentText },
+                { role: "user", parts: [{ text: "以下の文章を修正してください。" }] },
+                { role: "model", parts: [{ text: "はい、どのような修正をご希望ですか？" }] },
+                { role: "user", parts: [{ text: currentText }] },
             ],
             generationConfig: {
                 maxOutputTokens: 2000,

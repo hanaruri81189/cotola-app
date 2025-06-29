@@ -24,6 +24,7 @@ export default async function handler(req, res) {
             ],
             generationConfig: {
                 maxOutputTokens: 2000, // 出力トークン数の上限を設定
+                timeout: 30000, // タイムアウトを30秒に設定 (ミリ秒単位)
             },
         });
 
@@ -33,6 +34,9 @@ export default async function handler(req, res) {
         res.status(200).json({ modifiedText: text });
     } catch (error) {
         console.error('Gemini Chat API Error:', error);
+        if (error.response) {
+            console.error('Error details:', await error.response.text()); // 詳細なエラーレスポンスをログに出力
+        }
         res.status(500).json({ message: '文章の修正中にエラーが発生しました。' });
     }
 }

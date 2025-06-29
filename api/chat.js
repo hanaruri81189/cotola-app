@@ -33,7 +33,9 @@ export default async function handler(req, res) {
         }
 
         const chat = model.startChat({
-            history: chatHistory,
+            history: [
+                { role: "user", parts: [{ text: currentText }] }, // 現在の文章を最初のユーザー入力として扱う
+            ],
             generationConfig: {
                 maxOutputTokens: 2000,
                 timeout: 30000,

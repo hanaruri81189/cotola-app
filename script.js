@@ -6,6 +6,7 @@ const generatedText = document.getElementById('generated-text');
 const copyBtn = document.getElementById('copy-btn'); // コピーボタンの要素を取得
 const snsCopyBtn = document.getElementById('sns-copy-btn'); // SNS用コピーボタンの要素を取得
 const currentCharCount = document.getElementById('current-char-count'); // 文字数表示要素を取得
+const thinkingCat = document.getElementById('thinking-cat'); // 考え中の猫の画像要素を取得
 
 // アコーディオンの要素を取得
 const accordionHeaders = document.querySelectorAll('.accordion-header');
@@ -31,7 +32,7 @@ function updateCharCount() {
 generatedText.addEventListener('input', updateCharCount);
 
 // 「文章を生成する」ボタンが押されたときに実行する処理
-generationForm.addEventListener('submit', (event) => {
+generationForm.addEventListener('submit', async (event) => { // asyncを追加
     // フォームのデフォルトの送信動作（ページのリロード）を防ぎます。
     event.preventDefault();
 
@@ -60,6 +61,10 @@ generationForm.addEventListener('submit', (event) => {
 
     // エラーメッセージの色を元に戻す
     generatedText.style.color = "#5c5454";
+
+    // 生成中のメッセージと猫の画像を表示
+    generatedText.value = "文章を生成中...少々お待ちくださいね。";
+    thinkingCat.classList.remove('hidden');
 
     // ここから文章生成のシミュレーションロジック
     let generatedContent = ``;
@@ -210,6 +215,9 @@ generationForm.addEventListener('submit', (event) => {
     // 出来上がった文章を、画面に表示します。
     generatedText.value = generatedContent; // textContentではなくvalueに設定
     updateCharCount(); // 文字数を更新
+
+    // 生成完了後、猫の画像を非表示にする
+    thinkingCat.classList.add('hidden');
 });
 
 // コピーボタンのクリックイベントリスナー

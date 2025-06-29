@@ -1,0 +1,12 @@
+{
+  "name": "cotola-app",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "serve ."
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.14.0",
+    "serve": "^14.2.3"
+  }
+}

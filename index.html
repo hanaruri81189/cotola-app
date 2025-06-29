@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cotola™ - あなたの毎日を彩る言葉</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="logo">cotola™(コトラ)</h1>
+            <p class="subtitle">あなたの想いをラクに言葉に</p>
+        </header>
+        <main>
+            <form id="generation-form">
+                <!-- 投稿目的 -->
+                <div class="form-group accordion-item active">
+                    <label class="accordion-header">
+                        1. 投稿の目的（何のために書くの？）<span class="required-badge">必須</span>
+                        <span class="accordion-arrow"></span>
+                    </label>
+                    <div class="accordion-content active">
+                        <div class="radio-group">
+                            <div class="radio-option"><input type="radio" id="purpose1" name="purpose" value="認知拡大・発見"><label for="purpose1"><b>認知拡大・発見</b>（あなたやあなたの活動をより多くの人に知ってもらうための投稿）</label></div>
+                            <div class="radio-option"><input type="radio" id="purpose2" name="purpose" value="興味・関心"><label for="purpose2"><b>興味・関心</b>（あなたのファンになる投稿）</label></div>
+                            <div class="radio-option"><input type="radio" id="purpose3" name="purpose" value="行動促進"><label for="purpose3"><b>行動促進</b>（読者に具体的な行動を促し、次のステップへ進んでもらうための投稿）</label></div>
+                            <div class="radio-option"><input type="radio" id="purpose4" name="purpose" value="教育・価値提供"><label for="purpose4"><b>教育・価値提供</b>（先生としての投稿）</label></div>
+                            <div class="radio-option"><input type="radio" id="purpose5" name="purpose" value="販売・プロモーション"><label for="purpose5"><b>販売・プロモーション</b>（お願い！の投稿）</label></div>
+                            <div class="radio-option"><input type="radio" id="purpose6" name="purpose" value="コミュニティ活性化"><label for="purpose6"><b>コミュニティ活性化</b>（みんなで話そう！の投稿）</label></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ターゲット -->
+                <div class="form-group">
+                    <label for="target">2. ターゲット（誰に届けたい？）<span class="optional-badge">任意</span></label>
+                    <small class="form-hint">たった一人の顔を思い浮かべると、言葉はもっと深くなります。</small>
+                    <input type="text" id="target" name="target" placeholder="例：仕事と子育ての両立に悩む、30代のワーキングママ">
+                </div>
+
+                <!-- 伝えたい内容・エピソード -->
+                <div class="form-group">
+                    <label for="episode">3. 伝えたい内容・エピソード（何を伝える？）<span class="required-badge">必須</span></label>
+                    <textarea id="episode" name="episode" rows="4" placeholder="例：最近、お客様から「あなたの言葉で一歩踏み出せました」と言われて嬉しかった出来事など、親しい友人に話すように自由につづってみてください。"></textarea>
+                </div>
+
+                <!-- 伝えたい想い -->
+                <div class="form-group">
+                    <label for="message">4. 伝えたい想い（どうなってほしい？）<span class="optional-badge">任意</span></label>
+                    <small class="form-hint">ここが投稿の「魂」になります。あなたの想いが、共感の輪を広げます。</small>
+                    <input type="text" id="message" name="message" placeholder="例：完璧じゃなくても大丈夫。小さな一歩が未来を変える。">
+                </div>
+
+                <!-- 文章のトーン -->
+                <div class="form-group accordion-item">
+                    <label class="accordion-header">
+                        5. 文章のトーン（どんな雰囲気で伝えたい？）<span class="optional-badge">任意</span>
+                        <span class="accordion-arrow"></span>
+                    </label>
+                    <div class="accordion-content">
+                        <small class="form-hint">読者に与えたい印象に合わせて、言葉の雰囲気を調整します。</small>
+                        <div class="radio-group tone-group">
+                            <div class="radio-option"><input type="radio" id="tone1" name="tone" value="優しい・癒し系"><label for="tone1">優しい・癒し系</label></div>
+                            <div class="radio-option"><input type="radio" id="tone2" name="tone" value="元気・ポジティブ"><label for="tone2">元気・ポジティブ</label></div>
+                            <div class="radio-option"><input type="radio" id="tone3" name="tone" value="知的・専門的"><label for="tone3">知的・専門的</label></div>
+                            <div class="radio-option"><input type="radio" id="tone4" name="tone" value="親しみやすい・カジュアル"><label for="tone4">親しみやすい・カジュアル</label></div>
+                            <div class="radio-option"><input type="radio" id="tone5" name="tone" value="情熱的・感動的"><label for="tone5">情熱的・感動的</label></div>
+                            <div class="radio-option"><input type="radio" id="tone6" name="tone" value="シンプル・簡潔"><label for="tone6">シンプル・簡潔</label></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <div class="form-group">
+                    <label for="cta">6. 取って欲しい行動（次は何をする？）<span class="optional-badge">任意</span></label>
+                    <small class="form-hint">読者の「次の一歩」をそっと示してあげましょう。</small>
+                    <input type="text" id="cta" name="cta" placeholder="例：「いいね」で教えてね！、詳細はプロフィールのリンクから">
+                </div>
+
+                <!-- プラットフォーム -->
+                <div class="form-group accordion-item">
+                    <label class="accordion-header">
+                        7. 投稿プラットフォーム（どこに投稿するの？）<span class="optional-badge">任意</span>
+                        <span class="accordion-arrow"></span>
+                    </label>
+                    <div class="accordion-content">
+                        <small class="form-hint">プラットフォームに合わせた最適な文章を生成します。</small>
+                        <div class="radio-group platform-group">
+                            <div class="radio-option"><input type="radio" id="platform1" name="platform" value="Instagram (フィード/リール)"><label for="platform1">Instagram (フィード/リール)</label></div>
+                            <div class="radio-option"><input type="radio" id="platform2" name="platform" value="Instagram ストーリーズ"><label for="platform2">Instagram ストーリーズ <span class="platform-sub-hint">（情報・ノウハウ・価値観など、価値提供にフォーカス）</span></label></div>
+                            <div class="radio-option"><input type="radio" id="platform3" name="platform" value="X (旧Twitter)"><label for="platform3">X (旧Twitter)</label></div>
+                            <div class="radio-option"><input type="radio" id="platform4" name="platform" value="Threads"><label for="platform4">Threads</label></div>
+                            <div class="radio-option"><input type="radio" id="platform5" name="platform" value="LINE公式アカウント"><label for="platform5">LINE公式アカウント</label></div>
+                            <div class="radio-option"><input type="radio" id="platform6" name="platform" value="Note (ブログ)"><label for="platform6">Note (ブログ)</label></div>
+                            <div class="radio-option"><input type="radio" id="platform7" name="platform" value="Ameblo (ブログ)"><label for="platform7">Ameblo (ブログ)</label></div>
+                            <div class="radio-option"><input type="radio" id="platform8" name="platform" value="メルマガ"><label for="platform8">メルマガ</label></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="generate-btn" type="submit">文章を生成する</button>
+            </form>
+
+            <div class="output-area">
+                <textarea id="generated-text" rows="10"></textarea>
+                <div class="char-count">文字数: <span id="current-char-count">0</span></div>
+                <img id="thinking-cat" src="cat_thinking.png" alt="考え中の猫" class="hidden">
+            </div>
+            <button id="copy-btn" class="copy-btn">コピーする</button>
+            <button id="sns-copy-btn" class="copy-btn sns-copy-btn">SNS用コピー</button>
+        </main>
+        <footer>
+            <p>&copy; 2025 cotola™</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

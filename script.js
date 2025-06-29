@@ -15,6 +15,9 @@ const chatMessages = document.getElementById('chat-messages');
 const chatInput = document.getElementById('chat-input');
 const sendChatBtn = document.getElementById('send-chat-btn');
 
+// デバッグ用ログ: sendChatBtnが正しく取得されているか確認
+console.log('sendChatBtn element:', sendChatBtn);
+
 // アコーディオンの要素を取得
 const accordionHeaders = document.querySelectorAll('.accordion-header');
 
@@ -229,6 +232,58 @@ snsCopyBtn.addEventListener('click', () => {
             snsCopyBtn.textContent = 'コピーする';
         }, 2000); // 2秒後に元に戻す
     });
+});
+
+// チャット送信ボタンのイベントリスナー
+sendChatBtn.addEventListener('click', async () => {
+    console.log('Send chat button clicked!'); // デバッグ用ログ
+    const userMessage = chatInput.value.trim();
+    if (userMessage === '') return; // メッセージが空の場合は何もしない
+
+    displayChatMessage('user', userMessage); // ユーザーのメッセージを表示
+    chatInput.value = ''; // 入力欄をクリア
+
+    const currentText = generatedText.value; // 現在の生成済み文章を取得
+
+    // 生成中のメッセージと猫の画像を表示
+    generatedText.value = "AIが修正案を考えています...少々お待ちくださいね。";
+    thinkingCat.classList.remove('hidden');
+
+    try {
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                currentText: currentText,
+                userMessage: userMessage
+            }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            generatedText.value = data.modifiedText; // 修正された文章をテキストエリアに表示
+            displayChatMessage('ai', data.modifiedText); // AIの返答をチャットに表示
+            saveHistory(data.modifiedText); // 修正された文章も履歴に保存
+        } else {
+            const errorMessage = `エラーが発生しました: ${data.message || '不明なエラー'}`;
+            generatedText.value = errorMessage;
+            generatedText.style.color = "#e74c3c";
+            displayChatMessage('ai', errorMessage); // エラーメッセージをチャットに表示
+        }
+    } catch (error) {
+        console.error('Fetch Error:', error);
+        const errorMessage = "ネットワークエラーが発生しました。インターネット接続を確認してください。";
+        generatedText.value = errorMessage;
+        generatedText.style.color = "#e74c3c";
+        displayChatMessage('ai', errorMessage); // エラーメッセージをチャットに表示
+    }
+ finally {
+        updateCharCount();
+        thinkingCat.classList.add('hidden'); // 猫の画像を非表示にする
+    }
 });
 
 // 初期表示時の文字数を更新

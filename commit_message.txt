@@ -1,0 +1,1 @@
+feat: Improve accordion behavior and UI adjustments

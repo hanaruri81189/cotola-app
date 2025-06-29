@@ -175,6 +175,7 @@ generationForm.addEventListener('submit', async (event) => { // asyncを追加
 
     // フォームから各入力値を取得します。
     const purpose = document.querySelector('input[name="purpose"]:checked');
+    const author = document.getElementById('author').value.trim();
     const episode = document.getElementById('episode').value.trim();
     const target = document.getElementById('target').value.trim();
     const message = document.getElementById('message').value.trim();
@@ -212,6 +213,7 @@ generationForm.addEventListener('submit', async (event) => { // asyncを追加
             body: JSON.stringify({
                 purpose: purpose.value,
                 episode,
+                author,
                 target,
                 message,
                 tone: tone ? tone.value : '',

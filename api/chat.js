@@ -40,7 +40,7 @@ export default async function handler(req, res) {
             },
         });
 
-        const result = await chat.sendMessage(userMessage);
+        const result = await chat.sendMessage({ parts: [{ text: userMessage }] });
         const response = await result.response;
         const text = response.text();
         console.log('Gemini API response received.'); // Gemini API応答受信ログ

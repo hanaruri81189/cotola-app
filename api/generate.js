@@ -14,7 +14,7 @@ export default async function handler(req, res) {
     }
 
     const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-pro" });
 
     // AIへのプロンプトを構築
     let prompt = `あなたはSNSマーケティングの専門家であり、女性の心を掴む文章生成のプロです。

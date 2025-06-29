@@ -18,12 +18,13 @@
         <main>
             <form id="generation-form">
                 <!-- 投稿目的 -->
-                <div class="form-group accordion-item active">
+                <div class="form-group accordion-item">
                     <label class="accordion-header">
                         1. 投稿の目的（何のために書くの？）<span class="required-badge">必須</span>
+                        <span class="selected-value"></span>
                         <span class="accordion-arrow"></span>
                     </label>
-                    <div class="accordion-content active">
+                    <div class="accordion-content">
                         <div class="radio-group">
                             <div class="radio-option"><input type="radio" id="purpose1" name="purpose" value="認知拡大・発見"><label for="purpose1"><b>認知拡大・発見</b>（あなたやあなたの活動をより多くの人に知ってもらうための投稿）</label></div>
                             <div class="radio-option"><input type="radio" id="purpose2" name="purpose" value="興味・関心"><label for="purpose2"><b>興味・関心</b>（あなたのファンになる投稿）</label></div>
@@ -59,6 +60,7 @@
                 <div class="form-group accordion-item">
                     <label class="accordion-header">
                         5. 文章のトーン（どんな雰囲気で伝えたい？）<span class="optional-badge">任意</span>
+                        <span class="selected-value"></span>
                         <span class="accordion-arrow"></span>
                     </label>
                     <div class="accordion-content">
@@ -85,6 +87,7 @@
                 <div class="form-group accordion-item">
                     <label class="accordion-header">
                         7. 投稿プラットフォーム（どこに投稿するの？）<span class="optional-badge">任意</span>
+                        <span class="selected-value"></span>
                         <span class="accordion-arrow"></span>
                     </label>
                     <div class="accordion-content">
@@ -97,7 +100,7 @@
                             <div class="radio-option"><input type="radio" id="platform5" name="platform" value="LINE公式アカウント"><label for="platform5">LINE公式アカウント</label></div>
                             <div class="radio-option"><input type="radio" id="platform6" name="platform" value="Note (ブログ)"><label for="platform6">Note (ブログ)</label></div>
                             <div class="radio-option"><input type="radio" id="platform7" name="platform" value="Ameblo (ブログ)"><label for="platform7">Ameblo (ブログ)</label></div>
-                            <div class="radio-option"><input type="radio" id="platform8" name="platform" value="メルマガ"><label for="platform8">メルマガ</label></div>
+                            <div class="radio-option"><input type="radio" id="platform8" name="platform" value="メルマガ"><label for="platform8"><span>メルマガ</span></label></div>
                         </div>
                     </div>
                 </div>
@@ -106,9 +109,11 @@
             </form>
 
             <div class="output-area">
-                <textarea id="generated-text" rows="10"></textarea>
+                <div class="output-content">
+                    <textarea id="generated-text" rows="10"></textarea>
+                    <img id="thinking-cat" src="cat_thinking.png" alt="考え中の猫" class="hidden">
+                </div>
                 <div class="char-count">文字数: <span id="current-char-count">0</span></div>
-                <img id="thinking-cat" src="cat_thinking.png" alt="考え中の猫" class="hidden">
             </div>
             <button id="copy-btn" class="copy-btn">コピーする</button>
             <button id="sns-copy-btn" class="copy-btn sns-copy-btn">SNS用コピー</button>
@@ -120,6 +125,7 @@
                     <textarea id="chat-input" placeholder="例：もっと優しくして、短くして" rows="2"></textarea>
                     <button id="send-chat-btn" class="copy-btn">修正依頼を送る</button>
                 </div>
+                <small class="chat-note">※実際の改行やコピーは上の編集画面で確認できます。</small>
             </div>
         </main>
 

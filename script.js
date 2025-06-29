@@ -24,12 +24,62 @@ const accordionHeaders = document.querySelectorAll('.accordion-header');
 // 各アコーディオンヘッダーにクリックイベントリスナーを追加
 accordionHeaders.forEach(header => {
     header.addEventListener('click', () => {
-        const accordionItem = header.closest('.accordion-item');
-        const accordionContent = header.nextElementSibling; // ヘッダーの次の要素がコンテンツ
+        const clickedItem = header.closest('.accordion-item');
 
-        // activeクラスをトグルして開閉を制御
-        accordionItem.classList.toggle('active');
-        accordionContent.classList.toggle('active');
+        // いったんすべてのアコーディオンを閉じる処理
+        document.querySelectorAll('.accordion-item').forEach(item => {
+            // クリックされたアイテム以外は非アクティブにする
+            if (item !== clickedItem) {
+                item.classList.remove('active');
+                item.querySelector('.accordion-content').classList.remove('active');
+            }
+        });
+
+        // クリックされたアコーディオンの開閉をトグル
+        const content = clickedItem.querySelector('.accordion-content');
+        clickedItem.classList.toggle('active');
+        if (content) {
+            content.classList.toggle('active');
+        }
+    });
+});
+
+// アコーディオン内のラジオボタンが選択されたら、ヘッダーに値を表示してアコーディオンを閉じる
+document.querySelectorAll('.accordion-item .radio-option input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', (event) => {
+        const selectedRadio = event.target;
+        const accordionItem = selectedRadio.closest('.accordion-item');
+        const header = accordionItem.querySelector('.accordion-header');
+        const selectedValueSpan = header.querySelector('.selected-value');
+        
+        // ラジオボタンに対応するラベルのテキストを取得
+        // <b>タグがあればその中身を、なければラベル全体のテキストを取得
+        const label = selectedRadio.closest('.radio-option').querySelector('label');
+        let selectedText = '';
+        if (label) {
+            const boldText = label.querySelector('b');
+            if (boldText) {
+                selectedText = boldText.textContent;
+            } else {
+                // ラベルのテキストノードだけを取得して、余分な要素（ヒントなど）を避ける
+                // cloneNodeして元のDOMをいじらないようにする
+                const labelClone = label.cloneNode(true);
+                // サブヒントなど不要な要素を削除
+                const subHint = labelClone.querySelector('.platform-sub-hint');
+                if (subHint) {
+                    subHint.remove();
+                }
+                selectedText = labelClone.textContent.trim();
+            }
+        }
+
+        if (selectedValueSpan) {
+            selectedValueSpan.textContent = `: ${selectedText}`; // 見た目のためにコロンを追加
+        }
+
+        // アコーディオンを閉じる
+        accordionItem.classList.remove('active');
+        accordionItem.querySelector('.accordion-content').classList.remove('active');
     });
 });
 

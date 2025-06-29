@@ -166,7 +166,16 @@ header {
 
 .radio-option input[type="radio"] {
     margin-right: 8px;
-    margin-top: 4px; /* ラジオボタンをテキストの1行目中央に近づける */
+    flex-shrink: 0; /* ラジオボタンが縮まないように */
+}
+
+.radio-option {
+    display: flex;
+    align-items: center; /* 中央揃えに変更 */
+}
+
+.radio-option input[type="radio"] {
+    margin-top: 0; /* 上の余白をリセット */
 }
 
 .radio-option label {
@@ -175,6 +184,8 @@ header {
     color: #555;
     cursor: pointer; /* ラベルをクリックしやすく */
 }
+
+
 
 .radio-option label b {
     font-weight: 500;
@@ -192,40 +203,40 @@ header {
     background-color: #fdf6f8;
     border-radius: 15px;
     padding: 20px;
-    min-height: 100px;
-    display: flex;
-    flex-direction: column; /* 要素を縦に並べる */
-    justify-content: center;
-    align-items: center;
     margin-bottom: 30px;
-    position: relative; /* 画像の配置のため */
+}
+
+.output-content {
+    display: flex;
+    flex-direction: column; /* スマホでは縦並び */
+    align-items: center;
+    gap: 15px;
 }
 
 #thinking-cat {
-    width: 80px; /* 画像のサイズ調整 */
+    width: 60px; /* 少し小さく */
     height: auto;
-    margin-top: 10px;
-    opacity: 1; /* 初期状態は表示 */
-    transition: opacity 0.5s ease-in-out; /* フェードイン・アウト */
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    order: 2; /* スマホではテキストの下 */
 }
 
 #thinking-cat.hidden {
     opacity: 0;
-    position: absolute; /* 非表示時は重ならないように */
-    pointer-events: none; /* クリックできないように */
+    display: none;
 }
 
 #generated-text {
     font-size: 1.1rem;
     line-height: 1.6;
     color: #5c5454;
-    white-space: pre-wrap; /* 改行をそのまま表示 */
-    width: 100%; /* テキストエリアの幅を調整 */
-    height: 100%; /* テキストエリアの高さを調整 */
-    border: none; /* ボーダーをなくす */
-    background-color: transparent; /* 背景を透明に */
-    resize: vertical; /* 縦方向のみリサイズ可能に */
-    min-height: 80px; /* 最小高さを設定 */
+    white-space: pre-wrap;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    resize: vertical;
+    min-height: 80px;
+    order: 1; /* スマホではテキストが上 */
 }
 
 /* ボタン */
@@ -359,6 +370,14 @@ header {
     white-space: nowrap; /* ボタン内のテキストを改行させない */
 }
 
+.chat-note {
+    font-size: 0.8rem;
+    color: #b0a8a8;
+    margin-top: 10px;
+    text-align: center;
+    display: block;
+}
+
 /* フッター */
 footer {
     margin-top: 30px;
@@ -413,4 +432,24 @@ footer {
         padding: 8px 12px;
         font-size: 0.8rem;
     }
+}
+
+/* --- PC向けの追加スタイル (画面幅が601px以上の場合) --- */
+@media (min-width: 601px) {
+    .output-content {
+        flex-direction: row; /* PCでは横並び */
+        align-items: flex-start; /* 上揃え */
+    }
+
+    #generated-text {
+        order: 1; /* テキストを左に */
+        flex-grow: 1; /* テキストエリアが伸びるように */
+    }
+
+    #thinking-cat {
+        order: 2; /* 画像を右に */
+        margin-left: 15px; /* テキストとの間隔 */
+        align-self: center; /* 中央に配置 */
+    }
+}
 }

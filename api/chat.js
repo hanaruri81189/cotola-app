@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 export default async function handler(req, res) {
-    console.log('Serverless Function api/chat.js received a request.'); // リクエスト受信ログ
+    console.log('Serverless Function api/chat.js received a request.');
     if (req.method !== 'POST') {
         return res.status(405).json({ message: 'Method Not Allowed' });
     }
@@ -10,42 +10,31 @@ export default async function handler(req, res) {
 
     const API_KEY = process.env.GEMINI_API_KEY;
     if (!API_KEY) {
-        console.error('API Key is NOT configured in Vercel environment variables.'); // APIキー未設定ログ
+        console.error('API Key is NOT configured in Vercel environment variables.');
         return res.status(500).json({ message: 'API Key not configured.' });
     }
-    console.log('API Key successfully loaded.'); // APIキー読み込み成功ログ
+    console.log('API Key successfully loaded.');
 
     const genAI = new GoogleGenerativeAI(API_KEY);
-    console.log('GoogleGenerativeAI initialized.'); // GoogleGenerativeAI初期化ログ
+    console.log('GoogleGenerativeAI initialized.');
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     try {
-        console.log('Attempting to send message to Gemini API...'); // Gemini API呼び出し前ログ
+        console.log('Attempting to send message to Gemini API using generateContent...');
 
-        const chatHistory = [
-            { role: "user", parts: [{ text: "以下の文章を修正してください。" }] },
-            { role: "model", parts: [{ text: "はい、どのような修正をご希望ですか？" }] },
-        ];
+        // プロンプトを構築
+        const prompt = `現在の文章：
+${currentText}
 
-        // currentTextが空でなければ履歴に追加
-        if (currentText && currentText.trim() !== '') {
-            chatHistory.push({ role: "user", parts: [{ text: currentText }] });
-        }
+上記の文章に対して、以下の修正指示に従って修正してください。
+修正指示：${userMessage}
 
-        const chat = model.startChat({
-            history: [
-                { role: "user", parts: [{ text: currentText }] }, // 現在の文章を最初のユーザー入力として扱う
-            ],
-            generationConfig: {
-                maxOutputTokens: 2000,
-                timeout: 30000,
-            },
-        });
+修正後の文章のみを返してください。余計な説明や前置きは不要です。`;
 
-        const result = await chat.sendMessage([{ text: userMessage }]);
+        const result = await model.generateContent(prompt);
         const response = await result.response;
         const text = response.text();
-        console.log('Gemini API response received.'); // Gemini API応答受信ログ
+        console.log('Gemini API response received.');
         res.status(200).json({ modifiedText: text });
     } catch (error) {
         console.error('Gemini Chat API Error:', error);

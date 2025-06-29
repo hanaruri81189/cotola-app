@@ -15,8 +15,8 @@ const chatMessages = document.getElementById('chat-messages');
 const chatInput = document.getElementById('chat-input');
 const sendChatBtn = document.getElementById('send-chat-btn');
 
-// デバッグ用ログ: sendChatBtnが正しく取得されているか確認
-console.log('sendChatBtn element:', sendChatBtn);
+// チャットの会話履歴を保存する配列
+let chatConversation = [];
 
 // アコーディオンの要素を取得
 const accordionHeaders = document.querySelectorAll('.accordion-header');
@@ -113,6 +113,9 @@ function displayChatMessage(sender, message) {
     messageElement.innerHTML = `<b>${sender === 'user' ? 'あなた' : 'AI'}:</b> ${message}`;
     chatMessages.appendChild(messageElement);
     chatMessages.scrollTop = chatMessages.scrollHeight; // 最新のメッセージが見えるようにスクロール
+
+    // 会話履歴に追加
+    chatConversation.push({ role: sender, text: message });
 }
 
 // 「文章を生成する」ボタンが押されたときに実行する処理
@@ -172,6 +175,10 @@ generationForm.addEventListener('submit', async (event) => { // asyncを追加
         if (response.ok) {
             generatedText.value = data.generatedText;
             saveHistory(data.generatedText); // 生成成功時に履歴を保存
+
+            // 新しい文章が生成されたらチャット履歴をリセット
+            chatConversation = [];
+            chatMessages.innerHTML = ''; // チャット表示もクリア
         } else {
             generatedText.value = `エラーが発生しました: ${data.message || '不明なエラー'}`;
             generatedText.style.color = "#e74c3c";
@@ -236,7 +243,6 @@ snsCopyBtn.addEventListener('click', () => {
 
 // チャット送信ボタンのイベントリスナー
 sendChatBtn.addEventListener('click', async () => {
-    console.log('Send chat button clicked!'); // デバッグ用ログ
     const userMessage = chatInput.value.trim();
     if (userMessage === '') return; // メッセージが空の場合は何もしない
 
@@ -257,7 +263,8 @@ sendChatBtn.addEventListener('click', async () => {
             },
             body: JSON.stringify({
                 currentText: currentText,
-                userMessage: userMessage
+                userMessage: userMessage,
+                chatConversation: chatConversation // 会話履歴を送信
             }),
         });
 
@@ -279,13 +286,14 @@ sendChatBtn.addEventListener('click', async () => {
         generatedText.value = errorMessage;
         generatedText.style.color = "#e74c3c";
         displayChatMessage('ai', errorMessage); // エラーメッセージをチャットに表示
-    }
- finally {
+    } finally {
         updateCharCount();
         thinkingCat.classList.add('hidden'); // 猫の画像を非表示にする
     }
 });
 
-// 初期表示時の文字数を更新
+// ページ読み込み時に履歴をロード
 loadHistory();
+
+// 初期表示時の文字数を更新
 updateCharCount();

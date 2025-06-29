@@ -6,7 +6,7 @@ export default async function handler(req, res) {
         return res.status(405).json({ message: 'Method Not Allowed' });
     }
 
-    const { currentText, userMessage } = req.body;
+    const { currentText, userMessage, chatConversation } = req.body; // chatConversationを受け取る
 
     const API_KEY = process.env.GEMINI_API_KEY;
     if (!API_KEY) {
@@ -20,16 +20,20 @@ export default async function handler(req, res) {
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     try {
-        console.log('Attempting to send message to Gemini API using generateContent...');
+        console.log('Attempting to send message to Gemini API using generateContent with history...');
+
+        // 会話履歴をプロンプトに組み込む
+        let conversationPrompt = '';
+        if (chatConversation && chatConversation.length > 0) {
+            conversationPrompt += "これまでの会話履歴：\n";
+            chatConversation.forEach(chatItem => {
+                conversationPrompt += `${chatItem.role === 'user' ? 'あなた' : 'AI'}: ${chatItem.text}\n`;
+            });
+            conversationPrompt += "\n";
+        }
 
         // プロンプトを構築
-        const prompt = `現在の文章：
-${currentText}
-
-上記の文章に対して、以下の修正指示に従って修正してください。
-修正指示：${userMessage}
-
-修正後の文章のみを返してください。余計な説明や前置きは不要です。`;
+        const prompt = `${conversationPrompt}現在の文章：\n${currentText}\n\n上記の文章に対して、以下の修正指示に従って修正してください。\n修正指示：${userMessage}\n\n修正後の文章のみを返してください。余計な説明や前置きは不要です。`;
 
         const result = await model.generateContent(prompt);
         const response = await result.response;

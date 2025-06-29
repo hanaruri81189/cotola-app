@@ -21,12 +21,19 @@ export default async function handler(req, res) {
 
     try {
         console.log('Attempting to send message to Gemini API...'); // Gemini API呼び出し前ログ
+
+        const chatHistory = [
+            { role: "user", parts: [{ text: "以下の文章を修正してください。" }] },
+            { role: "model", parts: [{ text: "はい、どのような修正をご希望ですか？" }] },
+        ];
+
+        // currentTextが空でなければ履歴に追加
+        if (currentText && currentText.trim() !== '') {
+            chatHistory.push({ role: "user", parts: [{ text: currentText }] });
+        }
+
         const chat = model.startChat({
-            history: [
-                { role: "user", parts: [{ text: "以下の文章を修正してください。" }] },
-                { role: "model", parts: [{ text: "はい、どのような修正をご希望ですか？" }] },
-                { role: "user", parts: [{ text: currentText }] },
-            ],
+            history: chatHistory,
             generationConfig: {
                 maxOutputTokens: 2000,
                 timeout: 30000,
